@@ -1,0 +1,9 @@
+<resources>
+    <string name="dialog_permission_positive_button">OK</string>
+    <string name="dialog_permission_negative_button">Later</string>
+    <string name="dialog_permission_message">Please grant us permission in order to proceed with this request</string>
+    <string name="toolbar_tittle">Vietnam Esports</string>
+    <string name="error_access_token">Wrong access token!</string>
+    <string name="error_timestamp">Wrong timestamp!</string>
+    <string name="error_access_token_and_time_stamp">Wrong access token and timestamp!</string>
+</resources>

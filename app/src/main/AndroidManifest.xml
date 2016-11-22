@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="floatinglib.ved.garena.com.floatinglib">
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/toolbar_tittle"
+        android:theme="@style/AppTheme">
+        <activity android:name=".TestLibActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".control.FVPermissionsActivity"
+            android:theme="@style/AppTheme.Translucent"></activity>
+
+        <activity
+            android:name=".control.FVWebviewActivity"
+            android:configChanges="screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+
+        <service
+            android:name=".control.FVService"
+            android:enabled="true" />
+
+    </application>
+
+</manifest>
