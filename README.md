@@ -25,6 +25,6 @@ FloatingViewManager.ViewBuilder viewBuilder = FloatingViewManager.ViewBuilder.ne
                         .build();
 ```
 ## Contributing
-Its me
+Its me :+1
 ## History
 22-11-2016: add source code. v1
