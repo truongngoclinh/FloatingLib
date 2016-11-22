@@ -28,4 +28,4 @@ FloatingViewManager.ViewBuilder viewBuilder = FloatingViewManager.ViewBuilder.ne
 ## Contributing
 Its me :+1:
 ## History
-22-11-2016: add source code. v1
+*22-11-2016: add source code. v1*
