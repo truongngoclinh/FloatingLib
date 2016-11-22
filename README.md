@@ -18,7 +18,8 @@ FloatingViewManager.showView(TestLibActivity.this, builder);
 ```
 * Provide `ViewBuilder` object if you need to custom your floating view
 ```ruby
-FloatingViewManager.ViewBuilder viewBuilder = FloatingViewManager.ViewBuilder.newBuilder().drawable(R.drawable.ic_help)
+FloatingViewManager.ViewBuilder viewBuilder = FloatingViewManager.ViewBuilder.newBuilder()
+                        .drawable(R.drawable.ic_help)
                         .height(150).width(150)
                         .horizontalMargin(30).verticalMargin(50)
                         .onTop(true).onLeft(true)
