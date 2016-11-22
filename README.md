@@ -12,7 +12,6 @@ FloatingViewManager.UrlBuilder builder = FloatingViewManager.UrlBuilder.newBuild
                         .accessToken(FVConstantValue.URL_VALUE.TOKEN)
                         .build();
 ```              
-
 2. Call API `showView()` from `FloatingViewManager` to show the view, remeber to `hideView()` when it is unnessary.
 ```ruby
 FloatingViewManager.showView(TestLibActivity.this, builder);
