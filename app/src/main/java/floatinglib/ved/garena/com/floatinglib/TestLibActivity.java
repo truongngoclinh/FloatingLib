@@ -12,7 +12,7 @@ import floatinglib.ved.garena.com.floatinglib.utils.FVConstantValue;
 
 /**
  * Created by linhtruong on 11/21/16 - 10:02.
- * Description:
+ * Description: test APIs
  */
 
 public class TestLibActivity extends Activity {

@@ -3,10 +3,11 @@ package floatinglib.ved.garena.com.floatinglib.expose;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.provider.Settings;
 
 import java.util.HashMap;
 
-import floatinglib.ved.garena.com.floatinglib.TestLibActivity;
 import floatinglib.ved.garena.com.floatinglib.control.FVPermissionsActivity;
 import floatinglib.ved.garena.com.floatinglib.control.FVService;
 import floatinglib.ved.garena.com.floatinglib.model.FVPageInfo;
@@ -28,17 +29,21 @@ public class FloatingViewManager {
      * @param builder
      */
     public static void showView(Context context, UrlBuilder builder) {
-        TestLibActivity.test = "QBCXSFASDFADS";
         update(builder);
-        if (FVPermissionUtils.isPermissionGranted(context, FVPermissionUtils.Permissions.OVERLAY)) {
-            context.startService(new Intent(context, FVService.class));
-        } else {
-            Intent startIntent = new Intent(context, FVPermissionsActivity.class);
-            startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            if (context instanceof Activity) {
-                ((Activity) context).overridePendingTransition(0, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (FVPermissionUtils.isPermissionGranted(context, FVPermissionUtils.Permissions.OVERLAY) || Settings.canDrawOverlays(context)) {
+                context.startService(new Intent(context, FVService.class));
+            } else {
+                Intent intent = new Intent(context, FVPermissionsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                context.startActivity(intent);
+                if (context instanceof Activity) {
+                    ((Activity) context).overridePendingTransition(0, 0);
+                }
             }
+        } else {
+            context.startService(new Intent(context, FVService.class));
         }
     }
 
@@ -53,15 +58,20 @@ public class FloatingViewManager {
     public static void showView(Context context, UrlBuilder urlBuilder, ViewBuilder viewBuilder) {
         update(urlBuilder);
         update(viewBuilder);
-        if (FVPermissionUtils.isPermissionGranted(context, FVPermissionUtils.Permissions.OVERLAY)) {
-            context.startService(new Intent(context, FVService.class));
-        } else {
-            Intent startIntent = new Intent(context, FVPermissionsActivity.class);
-            startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            if (context instanceof Activity) {
-                ((Activity) context).overridePendingTransition(0, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (FVPermissionUtils.isPermissionGranted(context, FVPermissionUtils.Permissions.OVERLAY) || Settings.canDrawOverlays(context)) {
+                context.startService(new Intent(context, FVService.class));
+            } else {
+                Intent intent = new Intent(context, FVPermissionsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                context.startActivity(intent);
+                if (context instanceof Activity) {
+                    ((Activity) context).overridePendingTransition(0, 0);
+                }
             }
+        } else {
+            context.startService(new Intent(context, FVService.class));
         }
     }
 

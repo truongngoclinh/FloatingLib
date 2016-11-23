@@ -7,12 +7,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 import floatinglib.ved.garena.com.floatinglib.R;
 
@@ -22,6 +24,8 @@ import floatinglib.ved.garena.com.floatinglib.R;
  */
 
 public class FVPermissionUtils {
+
+    private static final String TAG = "FVPermissionUtils";
 
     public static final int REQUEST_PERMISSION_SETTING = 0x1739;
     public static boolean sShownRationalDialogOnRequest = false;
@@ -39,7 +43,9 @@ public class FVPermissionUtils {
      * @param activity
      */
     public static void requestPermission(final Activity activity, final Permissions permission) {
+        Log.d(TAG, "requestPermission: ");
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission.getPermission())) {
+            Log.d(TAG, "requestPermission: ");
             sShownRationalDialogOnRequest = true;
             showRationaleDialog(activity, R.string.dialog_permission_positive_button, new DialogInterface.OnClickListener() {
                 @Override
@@ -49,6 +55,7 @@ public class FVPermissionUtils {
                 }
             });
         } else {
+            Log.d(TAG, "requestPermission: request directly");
             // Permission has not been granted yet. Request it directly.
             sShownRationalDialogOnRequest = false;
             ActivityCompat.requestPermissions(activity, new String[]{permission.getPermission()},
@@ -83,6 +90,7 @@ public class FVPermissionUtils {
 
     private static void showRationaleDialog(Context context, @StringRes int posTextRes,
                                             DialogInterface.OnClickListener callback) {
+        Log.d(TAG, "showRationaleDialog: ");
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(R.string.dialog_permission_message);
         builder.setPositiveButton(posTextRes, callback);
@@ -100,7 +108,7 @@ public class FVPermissionUtils {
      * Check that all given permissions have been granted by verifying that each entry in the
      * given array is of the value {@link PackageManager#PERMISSION_GRANTED}.
      */
-    public static boolean verifyPermissions(final Activity activity, String[] permissions, int[] grantResults) {
+    public static boolean verifyPermissions(final Activity activity, final String[] permissions, int[] grantResults) {
         // At least one result must be checked.
         if (grantResults.length < 1) {
             return false;
@@ -109,9 +117,10 @@ public class FVPermissionUtils {
         // Verify that each required permission has been granted, otherwise return false.
         for (int i = 0; i < permissions.length; i++) {
             int result = grantResults[i];
+            final String permission = permissions[i];
             if (result != PackageManager.PERMISSION_GRANTED) {
                 boolean shouldShowRationale = ActivityCompat.shouldShowRequestPermissionRationale(activity,
-                        permissions[i]);
+                        permission);
                 if (!shouldShowRationale) {
                     // it means user has selected "never ask again"
                     if (sShownRationalDialogOnRequest) {
@@ -121,11 +130,17 @@ public class FVPermissionUtils {
                     showRationaleDialog(activity, R.string.dialog_permission_positive_button, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
-                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                            Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
-                            intent.setData(uri);
-                            activity.startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
+                            if (permission.equals(Permissions.OVERLAY.getPermission())) {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                    Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                                    activity.startActivityForResult(myIntent, REQUEST_PERMISSION_SETTING);
+                                }
+                            } else {
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
+                                intent.setData(uri);
+                                activity.startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
+                            }
                         }
                     });
                 }
@@ -146,8 +161,7 @@ public class FVPermissionUtils {
         WRITE_STORAGE(Manifest.permission.WRITE_EXTERNAL_STORAGE, 3),
 
         // OVERLAY
-        OVERLAY(Manifest.permission.SYSTEM_ALERT_WINDOW, 2),
-        ;
+        OVERLAY(Manifest.permission.SYSTEM_ALERT_WINDOW, 2),;
 
         private final String permission;
         private final int requestCode;
