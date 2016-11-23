@@ -34,6 +34,7 @@ public class FloatingViewManager {
             context.startService(new Intent(context, FVService.class));
         } else {
             Intent startIntent = new Intent(context, FVPermissionsActivity.class);
+            startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             if (context instanceof Activity) {
                 ((Activity) context).overridePendingTransition(0, 0);
@@ -56,6 +57,7 @@ public class FloatingViewManager {
             context.startService(new Intent(context, FVService.class));
         } else {
             Intent startIntent = new Intent(context, FVPermissionsActivity.class);
+            startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             if (context instanceof Activity) {
                 ((Activity) context).overridePendingTransition(0, 0);

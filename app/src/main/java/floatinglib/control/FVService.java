@@ -93,18 +93,42 @@ public class FVService extends Service {
         FVInfo info = FVInfo.getInfo();
         int sum = info.onTop + info.onBottom + info.onLeft + info.onRight;
         if ((sum != 2 && sum != 1) || (info.onTop + info.onBottom == 2) || (info.onLeft + info.onRight == 2)) { // default
+            Log.d(TAG, "initWindowManager: default gravity");
             mParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
         } else {
             if (info.onTop == 1) {
-                mParams.gravity = Gravity.TOP;
+                if (info.onLeft == 1) {
+                    Log.d(TAG, "initWindowManager: top left");
+                    mParams.gravity = Gravity.TOP | Gravity.LEFT;
+                } else if (info.onRight == 1) {
+                    Log.d(TAG, "initWindowManager: top right");
+                    mParams.gravity = Gravity.TOP | Gravity.RIGHT;
+                } else {
+                    Log.d(TAG, "initWindowManager: top only");
+                    mParams.gravity = Gravity.TOP;
+                }
             }
+
             if (info.onBottom == 1) {
-                mParams.gravity = Gravity.BOTTOM;
+                if (info.onLeft == 1) {
+                    Log.d(TAG, "initWindowManager: bottom left");
+                    mParams.gravity = Gravity.BOTTOM | Gravity.LEFT;
+                } else if (info.onRight == 1) {
+                    Log.d(TAG, "initWindowManager: bottom right");
+                    mParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+                } else {
+                    Log.d(TAG, "initWindowManager: bottom only");
+                    mParams.gravity = Gravity.BOTTOM;
+                }
             }
-            if (info.onLeft == 1) {
+
+            if (info.onLeft == 1 && info.onTop == 0 && info.onBottom == 0) {
+                Log.d(TAG, "initWindowManager: left only");
                 mParams.gravity = Gravity.LEFT;
             }
-            if (info.onRight == 1) {
+
+            if (info.onRight == 1 && info.onRight == 0 && info.onTop == 0) {
+                Log.d(TAG, "initWindowManager: right only");
                 mParams.gravity = Gravity.RIGHT;
             }
         }

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import java.util.HashMap;
+
 import floatinglib.ved.garena.com.floatinglib.expose.FloatingViewManager;
 import floatinglib.ved.garena.com.floatinglib.utils.FVConstantValue;
 
@@ -29,15 +31,16 @@ public class TestLibActivity extends Activity {
         findViewById(R.id.testButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HashMap<String, String> hashMap = new HashMap();
+                hashMap.put("id", "indotrial");
+                hashMap.put("password", "test123455");
                 FloatingViewManager.UrlBuilder builder = FloatingViewManager.UrlBuilder.newBuilder()
-                        .accessToken(FVConstantValue.URL_VALUE.TOKEN)
+                        .accessToken(FVConstantValue.URL_VALUE.TOKEN).extras(hashMap)
                         .build();
-/*
                 FloatingViewManager.ViewBuilder viewBuilder = FloatingViewManager.ViewBuilder.newBuilder().drawable(R.drawable.ic_help)
-                        .height(150).width(150).horizontalMargin(30).verticalMargin(50).onTop(true).onLeft(true).build();
-*/
+                        .height(80).width(80).horizontalMargin(20).verticalMargin(20).onBottom(true).onLeft(true).build();
 
-                FloatingViewManager.showView(TestLibActivity.this, builder);
+                FloatingViewManager.showView(TestLibActivity.this, builder, viewBuilder);
             }
         });
     }
