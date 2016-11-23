@@ -15,6 +15,7 @@ FloatingViewManager.UrlBuilder builder = FloatingViewManager.UrlBuilder.newBuild
 **Call API** `showView()` from `FloatingViewManager` to show the view, remeber to `hideView()` when it is unnecessary.
 ```ruby
 FloatingViewManager.showView(TestLibActivity.this, builder);
+FloatingViewManager.hideView(TestLibActivity.this);
 ```
 Provide `ViewBuilder` object if you need to **custom your floating view**
 ```ruby
