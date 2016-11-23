@@ -1,5 +1,5 @@
 # FloatingViewLib
-Provide a floating view on top of all application and specific click function as opening a webview.
+Provide a floating view on top of all applications and specific click function as opening a webview.
 ## Installation
 Clone and import into your project.
 ## Usage
