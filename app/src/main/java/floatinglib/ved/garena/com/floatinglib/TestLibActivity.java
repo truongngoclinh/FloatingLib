@@ -29,10 +29,8 @@ public class TestLibActivity extends Activity {
             @Override
             public void onClick(View v) {
                 FloatingViewManager.UrlBuilder builder = FloatingViewManager.UrlBuilder.newBuilder()
-                        .accessToken("76ffc3d38840204cee1b7f214e61b6d42c38e0d4bafc7cfa11a192c79a877179")
                         .homeUrl("http://hotro.garena.vn/app-auth")
                         .redirectUrl("https://hotro.garena.vn/gui-yeu-cau?embedded=1")
-                        .salt("7d5f8c171b172d2b9c6b3407bc1c810a")
                         .build();
                 FloatingViewManager.ViewBuilder viewBuilder = FloatingViewManager.ViewBuilder.newBuilder().drawable(R.drawable.ic_help)
                         .height(80).width(80).horizontalMargin(20).verticalMargin(20).onBottom(true).onLeft(true).build();
