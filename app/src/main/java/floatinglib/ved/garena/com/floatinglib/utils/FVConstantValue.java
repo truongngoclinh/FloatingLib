@@ -10,6 +10,8 @@ public class FVConstantValue {
     public static final String TOKEN = "access_token";
     public static final String TIMESTAMP = "&timestamp";
     public static final String CHECKSUM = "&checksum";
+    public static final String SALT = "&salt";
+    public static final String REDIRECT_URL = "&redirect_url";
 
     public static final int FVVIEW_WIDTH = 100;
     public static final int FVVIEW_HEIGHT = 100;

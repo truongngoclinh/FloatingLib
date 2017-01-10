@@ -224,11 +224,14 @@ public class FloatingViewManager {
 
         public String accessToken;
         public String homeUrl;
+        public String salt;
+        public String redirectUrl;
         public HashMap<String, String> extras;
 
         private UrlBuilder() {
             this.accessToken = "";
             this.homeUrl = "";
+            this.redirectUrl = "";
             this.extras = new HashMap<>();
         }
 
@@ -238,6 +241,16 @@ public class FloatingViewManager {
 
         public UrlBuilder accessToken(String accessToken) {
             this.accessToken = accessToken;
+            return this;
+        }
+
+        public UrlBuilder redirectUrl(String redirectUrl) {
+            this.redirectUrl = redirectUrl;
+            return this;
+        }
+
+        public UrlBuilder salt(String salt) {
+            this.salt = salt;
             return this;
         }
 
@@ -274,7 +287,7 @@ public class FloatingViewManager {
      * @param builder
      */
     private static void update(UrlBuilder builder) {
-        FVPageInfo.getPageInfo().create(builder.accessToken, builder.homeUrl, builder.extras);
+        FVPageInfo.getPageInfo().create(builder.accessToken, builder.homeUrl, builder.salt, builder.redirectUrl, builder.extras);
     }
 
     /**

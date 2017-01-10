@@ -23,6 +23,8 @@ public class FVPageInfo {
     public String accessToken;
     public String timeStamp;
     public String homeUrl;
+    public String salt;
+    public String redirectUrl;
     public HashMap<String, String> extras;
 
     private static FVPageInfo mInstance;
@@ -30,6 +32,8 @@ public class FVPageInfo {
     protected FVPageInfo() {
         accessToken = "";
         timeStamp = "";
+        salt = "";
+        redirectUrl = "";
         extras = new HashMap<>();
         homeUrl = FVConstantValue.BASE_URL;
     }
@@ -42,9 +46,16 @@ public class FVPageInfo {
         return mInstance;
     }
 
-    public void create(String accessToken, String homeUrl, HashMap<String, String> extras) {
+    public void create(String accessToken, String homeUrl, String salt, String redirectUrl, HashMap<String, String> extras) {
         this.accessToken = accessToken;
+        this.salt = salt;
         this.timeStamp = String.valueOf(System.currentTimeMillis() / 1000L);
+        if (redirectUrl.startsWith("http")) {
+            this.redirectUrl = redirectUrl;
+        }
+        else {
+            this.redirectUrl = "";
+        }
         if (!TextUtils.isEmpty(homeUrl) && homeUrl.startsWith("http")) {
             this.homeUrl = homeUrl;
         }
@@ -58,7 +69,8 @@ public class FVPageInfo {
         StringBuilder builder = new StringBuilder();
         builder.append(FVConstantValue.TOKEN).append("=").append(accessToken)
                 .append(FVConstantValue.TIMESTAMP).append("=").append(timeStamp)
-                .append(FVConstantValue.CHECKSUM).append("=").append(buildHmac());
+                .append(FVConstantValue.CHECKSUM).append("=").append(buildHmac())
+                .append(FVConstantValue.REDIRECT_URL).append("=").append(redirectUrl);
 
         if (extras.size() > 0) {
             for (HashMap.Entry entry : extras.entrySet()) {
@@ -76,7 +88,12 @@ public class FVPageInfo {
         String hmac = "";
 
         try {
-            hmac = FVHmacSha1Signature.calculateRFC2104HMAC(accessToken + timeStamp, FVConstantValue.URL_VALUE.KEY);
+            if (this.salt != null && this.salt.length() > 0) {
+                hmac = FVHmacSha1Signature.calculateRFC2104HMAC(accessToken + timeStamp, this.salt);
+            }
+            else {
+                hmac = FVHmacSha1Signature.calculateRFC2104HMAC(accessToken + timeStamp, FVConstantValue.URL_VALUE.KEY);
+            }
         } catch (SignatureException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
