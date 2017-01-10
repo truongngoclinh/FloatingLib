@@ -7,6 +7,8 @@ Clone and import into your project.
 This class also supports to add more info such as: 
   * `homeUrl`: url of the support page
   * `extras`: extra future params for url
+  * `salt`: salt key
+  * `redirectUrl`: redirect url
 ```ruby
 FloatingViewManager.UrlBuilder builder = FloatingViewManager.UrlBuilder.newBuilder()
                         .accessToken(FVConstantValue.URL_VALUE.TOKEN)
