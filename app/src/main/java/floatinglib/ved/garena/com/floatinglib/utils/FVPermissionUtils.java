@@ -161,7 +161,7 @@ public class FVPermissionUtils {
         WRITE_STORAGE(Manifest.permission.WRITE_EXTERNAL_STORAGE, 3),
 
         // OVERLAY
-        OVERLAY(Manifest.permission.SYSTEM_ALERT_WINDOW, 2),;
+        OVERLAY(Manifest.permission.SYSTEM_ALERT_WINDOW, 4),;
 
         private final String permission;
         private final int requestCode;
